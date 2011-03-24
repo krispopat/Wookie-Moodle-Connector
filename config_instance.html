@@ -1,0 +1,37 @@
+<?php
+    echo require_js(array( 
+    $CFG->wwwroot . '/blocks/wookie/lib/jquery-1.2.3.pack.js'
+    ));
+    
+    $gallery = new gallery();
+    print($gallery->showGallery());
+?>
+
+<script type="text/javascript">
+
+jQuery(document).ready(function() {
+
+   $('.wookie-button').mouseover(function(){
+      $(this).css("backgroundColor","#2888D8");
+   });
+
+   $('.wookie-button').mouseout(function(){
+      $(this).css("backgroundColor","#2878C0");
+   });
+   
+    jQuery('#widget_gallery').click( function(e){
+        var $clicked_element = $(e.target)
+        if ( $clicked_element.is('input') ){
+            e.preventDefault();
+            var widget_id = $clicked_element.attr('id');
+            var widget_type = $clicked_element.attr('name')
+            $("#widget_id").val(widget_id);  
+            $("form[name='block-config']").submit();       
+        }
+    });
+
+});
+
+</script>
+
+<input type="hidden" name="widget_id" id="widget_id"/>
