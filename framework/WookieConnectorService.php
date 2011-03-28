@@ -16,16 +16,18 @@
  */
 
 /** @ignore */
-require("WookieConnectorExceptions.php");
-require("WookieServerConnection.php");
-require("WidgetInstances.php");
-require("Widget.php");
-require("WidgetInstance.php");
-require("WidgetProperties.php");
-require("User.php");
-require("HTTP_Response.php");
-require("Logger.php");
-require("WookieConnectorServiceInterface.php");
+
+require("{$CFG->dirroot}/blocks/wookie/framework/WookieConnectorExceptions.php");
+require("{$CFG->dirroot}/blocks/wookie/framework/WookieServerConnection.php");
+require("{$CFG->dirroot}/blocks/wookie/framework/WidgetInstances.php");
+require("{$CFG->dirroot}/blocks/wookie/framework/Widget.php");
+require("{$CFG->dirroot}/blocks/wookie/framework/WidgetInstance.php");
+require("{$CFG->dirroot}/blocks/wookie/framework/WidgetProperties.php");
+require("{$CFG->dirroot}/blocks/wookie/framework/User.php");
+require("{$CFG->dirroot}/blocks/wookie/framework/HTTP_Response.php");
+require("{$CFG->dirroot}/blocks/wookie/framework/Logger.php");
+require("{$CFG->dirroot}/blocks/wookie/framework/WookieConnectorServiceInterface.php");
+ 
 
 /**
  * Wookie connector service, handles all the data requests and responses 

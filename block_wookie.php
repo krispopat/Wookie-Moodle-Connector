@@ -11,12 +11,13 @@
  */
 require_once($CFG->libdir . '/phpxml/xml.php');
 require_once($CFG->libdir .'/filelib.php');
-require_once('framework/WookieConnectorService.php');
+require_once("{$CFG->dirroot}/blocks/wookie/framework/WookieConnectorService.php");
+ 
 
 class block_wookie extends block_base {
     
     function init() {
-        $this->version = 20090112400;
+        $this->version = 201132800;
         $this->title = 'Widget';
         $this->content_type = BLOCK_TYPE_TEXT;
     }
