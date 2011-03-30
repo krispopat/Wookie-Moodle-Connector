@@ -49,7 +49,7 @@ class block_wookie extends block_base {
             $this->instantiateWidget(); 
         } 
         if (!$this->config->widget_url){ 
-            $this->content->text = '<p>Turn editing on and then click the "edit" button above to select a widget from the gallery</p>'; 
+            $this->content->text = get_string('configurewidget','block_wookie'); 
         } else { 
             // Render output
             $this->content->text = '<iframe style="border:none" src="'.$this->config->widget_url.'" height="'.$this->config->widget_height.'" width="'.$this->config->widget_width.'"></iframe>';
