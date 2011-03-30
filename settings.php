@@ -6,4 +6,7 @@ $settings->add(new admin_setting_configtext('block_wookie_url','Wookie Server UR
 $settings->add(new admin_setting_configtext('block_wookie_key', 'Wookie API Key',
                    '', "TEST", PARAM_TEXT));
 
+$settings->add(new admin_setting_configtextarea('block_wookie_moodleparams','Moodle Params',
+					get_string('moodleparamshelp','block_wookie'),'',PARAM_RAW));
+
 ?>

@@ -92,19 +92,70 @@ class block_wookie extends block_base {
      * Sets up a widget instance
      */
     function instantiateWidget(){
-        global $USER, $CFG;
+        global $USER, $CFG, $COURSE;
         $conn = new WookieConnectorService ($CFG->block_wookie_url, $CFG->block_wookie_key, $this->instance->id, $USER->id );
 
         $widgetInstance = $this->getWidget($conn);  
         $context = get_context_instance(CONTEXT_BLOCK, $this->instance->id);      
-        
         // Set defaults
 		if ( $widgetInstance ) {
         	$this->setProperty($widgetInstance, "username", $USER->username, $conn);
         	if (has_capability('moodle/course:manageactivities', $context )) {
         	    $this->setProperty($widgetInstance, "moderator", "true", $conn);
         	}
-        
+			//print_object($this);
+			if (isset($CFG->block_wookie_moodleparams)) {
+			
+				$moodleParams = explode(',',$CFG->block_wookie_moodleparams);
+				//print_object($moodleParams);
+				foreach($moodleParams as $moodleParam) {
+					/*
+					Each $moodleParam should be in the form:
+					widgetvariablename=$moodlevariable
+					
+					suggesting (\w*)=\$(\w*)(->)*(\w+)* 
+					to test that this format works
+					*/
+					$matches= array();
+					$matchCount = preg_match('/([a-zA-Z]*)=\$([a-zA-Z]+)(->)*(\w+)*/',$moodleParam,&$matches);
+					print_object($matches[0]);
+					print_object($moodleParam);
+					if (
+						$matches[0] != $moodleParam
+					) {
+					//	line didn't match the expected format so *may* be malicious, so skip
+					//we should log this
+						//add_to_log();
+						echo("invalid $moodleParam");
+						//add_to_log($course->id, 'course', 'view', "view.php?id=$course->id", "$course->id");
+						//add_to_log($COURSE->id,'block_wookie','invalidparam','admin/settings.php?section=blocksettingwookie',"'$moodleParam' is an invalid Moodle variable for passing to widgets. An Admin should modify the block_wookie_moodleparams setting");
+						break;
+					//	continue;
+					}
+					else {
+					$paramArray = explode("=",$moodleParam);
+					$name = $paramArray[0];
+					$moodleParam = $paramArray[1];
+					//$param = $paramArray[1]
+					//echo "Widget variable name: $name";
+					//echo "Moodle Variable name: $moodleParam";
+					$evalString = "return ".$moodleParam.";";
+					//echo "Eval string: $evalString";
+					/*
+					probably need to work out a mechanism (e.g. REGEX) to 
+					ensure that we've not got a malicious bit of code...
+					*/
+					$value = eval($evalString);	//this is SODDING dangerous!!!
+					//echo "Value : $value";
+					//echo '<br />';
+					$this->setProperty($widgetInstance,$name,$value,$conn);
+					}
+				}
+				//print_object($moodleParams);
+			
+			}
+			
+			
         	// Add participant
         	$this->addParticipant($widgetInstance, $conn);
 		}
