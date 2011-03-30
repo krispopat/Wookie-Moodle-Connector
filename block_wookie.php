@@ -44,6 +44,9 @@ class block_wookie extends block_base {
     }
     
 	function get_content() { 
+		if($this->content !== NULL) {
+            return $this->content;
+        }
         $this->content = new stdClass; 
         if (!$this->config->widget_url && $this->config->widget_id){ 
             $this->instantiateWidget(); 
